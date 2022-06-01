@@ -8,6 +8,7 @@ import ReduxThunk from "redux-thunk";
 import { Provider } from 'react-redux';
 import reducers from './reducers';
 
+import { store } from './redux/store'
 // -- App
 import App from './App';
 
@@ -15,10 +16,6 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 // -- Data Store
-const store = createStore(
-  reducers,
-  applyMiddleware(ReduxThunk)
-);
 
 // -- Rendering Application
 render(

@@ -18,15 +18,11 @@ import { logoutUser } from "./actions/auth";
 // -- Third Party Libs
 import { ToastContainer } from "react-toastify";
 
-// -- Services
-import isAuthenticated from "./services/authService";
-
 // -- Component Styles
 import "./styles/app.scss";
 
-const PrivateRoute = ({ dispatch, component, ...rest }) => {
-  if (!isAuthenticated(JSON.parse(localStorage.getItem("authenticated")))) {
-    dispatch(logoutUser());
+const PrivateRoute = ({ component, ...rest }) => {
+  if (!localStorage.getItem("user_id")) {
     return (<Redirect to="/login" />)
   } else {
     return (
@@ -43,7 +39,7 @@ const App = (props) => {
         <Switch>
           <Route path="/" exact render={() => <Redirect to="/template/dashboard" />} />
           <Route path="/template" exact render={() => <Redirect to="/template/dashboard"/>}/>
-          <PrivateRoute path="/template" dispatch={props.dispatch} component={LayoutComponent} />
+          <PrivateRoute path="/template" component={LayoutComponent} />
           <Route path="/login" exact component={Login} />
           <Route path="/error" exact component={ErrorPage} />
           <Route path="/register" exact component={Register} />
@@ -55,8 +51,13 @@ const App = (props) => {
   );
 }
 
-const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated,
-});
+const mapStateToProps = (state) => {
+  const { loginUser } = state.user;
+  return { loginUser };
+};
+const mapActionsToProps = {};
 
-export default connect(mapStateToProps)(App);
+export default connect(
+  mapStateToProps,
+  mapActionsToProps
+)(App);

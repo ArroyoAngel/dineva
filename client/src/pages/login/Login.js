@@ -13,7 +13,7 @@ import {
 } from "reactstrap";
 import Widget from "../../components/Widget/Widget";
 import Footer from "../../components/Footer/Footer";
-import { loginUser } from "../../actions/auth";
+import { loginUser } from "../../redux/user/actions";
 import hasToken from "../../services/authService";
 
 import loginImage from "../../assets/loginImage.svg";
@@ -33,7 +33,7 @@ const Login = (props) => {
 
   const doLogin = (e) => {
     e.preventDefault();
-    props.dispatch(loginUser({ password: state.password, email: state.email }))
+    props.loginUser({ password: state.password, user: state.email })
   }
 
   const changeCreds = (event) => {
@@ -123,17 +123,15 @@ const Login = (props) => {
   )
 }
 
+const mapStateToProps = (state) => {
+  const { user, loading, error } = state.user;
+  return { user, loading, error };
+};
+const mapDispatchToProps = (dispatch) => ({
+  loginUser: (value) => dispatch(loginUser(value))
+})
 
-Login.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-}
-
-function mapStateToProps(state) {
-  return {
-    isFetching: state.auth.isFetching,
-    isAuthenticated: state.auth.isAuthenticated,
-    errorMessage: state.auth.errorMessage,
-  };
-}
-
-export default withRouter(connect(mapStateToProps)(Login));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Login);

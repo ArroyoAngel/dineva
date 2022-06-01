@@ -19,7 +19,7 @@ import {
   FormGroup,
 } from "reactstrap";
 
-import { logoutUser } from "../../actions/auth";
+import { logoutUser } from "../../redux/user/actions";
 import { closeSidebar, openSidebar } from "../../actions/navigation";
 import MenuIcon from "../Icons/HeaderIcons/MenuIcon";
 import SearchBarIcon from "../Icons/HeaderIcons/SearchBarIcon";
@@ -63,7 +63,7 @@ const Header = (props) => {
   }
 
   const doLogout = () => {
-    props.dispatch(logoutUser());
+    props.logoutUser();
   }
 
   return (
@@ -147,17 +147,17 @@ const Header = (props) => {
   )
 }
 
-Header.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  sidebarOpened: PropTypes.bool,
-}
-
 function mapStateToProps(store) {
   return {
     sidebarOpened: store.navigation.sidebarOpened,
     sidebarStatic: store.navigation.sidebarStatic,
   };
 }
+const mapDispatchToProps = (dispatch) => ({
+  logoutUser: () => dispatch(logoutUser())
+})
 
-export default withRouter(connect(mapStateToProps)(Header));
-
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Header);

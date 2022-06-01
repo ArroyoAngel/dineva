@@ -1,0 +1,211 @@
+$base-background-color: #f3f7fa;
+$base-login-color: #74BFCC;
+$base-label-color: #566073;
+
+body{
+    background-color: $base-background-color !important;
+}
+
+input{
+    margin-bottom: 10px;
+}
+
+#app-container{
+    height: 100vh;
+}
+
+div#app-container{
+    margin: 15px;
+    height:98%;
+    border-radius: 26px 26px 26px 26px;
+    box-shadow: 0px 0px 10px 5px rgba(0, 0, 0, 0.2);
+    padding: 1%;
+}
+
+.auth-card{     //  style from login
+    border: none !important;
+    background-color: transparent !important;
+    .container-login{
+        background-color: $base-background-color;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .wrap-login{
+            color: white;
+            background-color: #424242;
+            padding: 30px 55px 33px 55px;
+            .login-form{
+                width: 100%;
+                .form-control{
+                    margin: 15px 0px;
+                }
+                .login-form-title{
+                    display: block;
+                    font-family: Georgia, 'Times New Roman', Times, serif;
+                    font-size: 30px;
+                    color: white;
+                    line-height: 1.2;
+                    text-align: center;
+                }
+                .btn-user-login{
+                    width: 100%;
+                }
+            }
+        }
+    }
+}
+
+.container-main-app{
+    display: flex;
+    .dashboard-wrapper{     
+        align-content: stretch;
+        .container-navigation{
+            .nav-bar{
+                width: 240px;
+                .sidebar{
+                    max-width: 240px;
+                    background-color: #424242;
+                    border: 1px solid rgba(0, 0, 0, 0.1);
+                    min-height: 100vh;
+                    .link-router{
+                        color: white;
+                        text-decoration: none;
+                        .list-button{
+                            padding: 20px 10px;
+                        }
+                    }
+                }
+            }
+        }
+        .container-app{
+            min-height: 100vh;
+            width: 100vh;
+        }
+    }
+}
+
+.form-main{
+    height: 100vh;
+    width: 100vh;
+    color: $base-label-color;
+    display: inline;
+    .title-cite{
+        text-align: center;
+    }
+    .img-cite-logo{
+        background-image: url('https://ejercito.mil.bo/then3wpag/pictures/ima_institutos/para.png');
+        background-repeat: no-repeat;
+        background-size: contain;
+        width: 150px;
+        height: 150px;
+        margin: 30vh 75vh;
+        background-position-x: center;
+    }
+}
+
+.form-create-course{
+    color: $base-label-color;
+    height: 100vh;
+    width: 100vh;
+    .container-create-course{
+        padding: 10px 15px;
+        .title-form-course{
+            margin-bottom: -15px;
+            .title-cite{
+                margin-bottom: -5px;
+            }
+        }
+        .container-data-course{
+            width: 175.5%;
+        }
+    }
+    
+}
+
+.form-create-materia{
+    color: $base-label-color;
+    height: 100vh;
+    width: 100vh;
+    .container-create-materia{
+        padding: 10px 15px;
+        .title-form-materia{
+            margin-bottom: -15px;
+            .title-cite{
+                margin-bottom: -5px;
+            }
+        }
+        .container-data-materia{
+            width: 175.5%;
+        }
+    }
+    
+}
+
+.form-ver-course{
+    color: $base-label-color;
+    height: 100vh;
+    width: 100vh;
+    .container-ver-course{
+        padding: 10px 15px;
+        .title-form-course{
+            margin-bottom: -15px;
+            .title-cite{
+                margin-bottom: -5px;
+            }
+        }
+        .container-data-course{
+            width: 175.5%;
+        }
+    }
+}
+
+.-btn{
+    appearance:none;
+    display:block;
+    width:98%;
+    height:100%;
+    border: 0;
+    border-radius: 3px;
+    padding: 6px;
+    font-size: 1em;
+    transition: all .1s ease;
+    cursor: pointer;
+    outline:none;
+    color: rgb(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, .1);
+    &:hover{
+        color:rgba(255, 255, 255);
+        background:rgba(0, 0, 0, .3);
+    }
+  }
+
+/* -- NAVBAR -- */
+.nav-bar{
+    padding: 15px;
+    background: rgb(112, 170, 153) !important;
+
+    .brand{
+    }
+    .collapse{
+        
+        .button{
+            margin: 0px 2px 0px 2px;
+            
+        }
+    }
+}
+
+.rt-tr{
+    border-bottom: solid 1px;
+    border-color: rgb(10, 68, 51);
+}
+
+.card-header{
+    background: rgb(112, 170, 153);
+    color: rgb(255, 255, 255);
+}
+.btn-primary{
+    background: rgb(33, 112, 88);
+    border-color: rgb(10, 68, 51);
+}
