@@ -6,7 +6,6 @@ const initialState = [];
 
 export default (state = initialState, action) =>{
   let { payload } = action
-  console.log('--', payload)
   switch (action.type) {
     case GET_WORKFLOW:
       return [ ...payload ]

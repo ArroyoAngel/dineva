@@ -12,7 +12,7 @@ export const getAllRequest = () => async dispatch => {
       payload: requests
   })
 }
-export const regRequest = (payload) => async dispatch => {
+export const regRequest = (payload, history) => async dispatch => {
   const ordersBD = await axios.get(`http://localhost:4000/get/order`).then(values=>values.data).catch(err=>err);
   const orders  = {}
   ordersBD.map(order => {
@@ -45,6 +45,7 @@ export const regRequest = (payload) => async dispatch => {
 
   await axios.put(`http://localhost:4000/update/store`,{...newPayload}).then(values=>values.data).catch(err=>err);
   addWorkFlow('update', 'store', newPayload, prePayload )
+  history.push('/app/request/list')
 }
 
 export const getRequestByID = (payload) => async dispatch => {

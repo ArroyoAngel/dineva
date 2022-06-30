@@ -1,0 +1,44 @@
+.carousel .thumb img {
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.carousel .slide img {
+    max-height: 300px;  /* change this to whatever you want */
+    width: auto;
+}
+
+.carousel-item.active {
+    max-height: 250px;
+}
+div.div-image {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    background-size: contain;
+    border-radius: 50%;
+    background-attachment: inherit;
+    cursor: pointer;
+}
+div.div-image:hover {
+    border-color: red;
+    box-shadow: 0px 0px 10px red;
+    opacity: 0.7;
+}
+div.div-image > .delete-icon {
+    display: none;
+    color: red;
+    position: absolute;
+    transform: translate(50%, 50%);
+    margin-left: 20px;
+}
+div.div-image:hover {
+    .delete-icon {
+        display: block;
+    }
+}
+div.container-images{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}

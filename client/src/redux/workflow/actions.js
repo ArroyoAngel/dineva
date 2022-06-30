@@ -14,9 +14,14 @@ export const getWorkflow = () => async dispatch => {
 };
 
 export const addWorkFlow = async (action, collection, document, body=null, prev=null) => {
+    const actor = {
+        id: localStorage.getItem('user_id'),
+        rol: localStorage.getItem('user_rol'),
+        name: localStorage.getItem('user_name'),
+    }
     const payload = {
         date: new Date(),
-        actor: localStorage.getItem('user_id'),
+        actor: JSON.stringify(actor),
         collection: collection,
         document: document,
         backup: JSON.stringify(prev),

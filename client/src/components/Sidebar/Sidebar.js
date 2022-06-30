@@ -9,6 +9,7 @@ import { changeActiveSidebarItem } from "../../actions/navigation.js";
 import SofiaLogo from "../Icons/SofiaLogo.js";
 import cn from "classnames";
 
+import { logoutUser } from '../../redux/user/actions'
 const Sidebar = (props) => {
 
   const {
@@ -27,76 +28,89 @@ const Sidebar = (props) => {
       }, 0);
     }
   }, [props.sidebarOpened])
-
+  
   return (
     <nav className={cn(s.root, {[s.sidebarOpen]: burgerSidebarOpen})} >
       <header className={s.logo}>
         <SofiaLogo/>
-        <span className={s.title}>SOFIA</span>
+        <span className={s.title}>Dineva</span>
       </header>
       <ul className={s.nav}>
         <LinksGroup
           onActiveSidebarItemChange={activeItem => props.dispatch(changeActiveSidebarItem(activeItem))}
           activeItem={props.activeItem}
-          header="Dashboard"
+          header="Inicio"
           isHeader
           iconName={<i className={'eva eva-home-outline'}/>}
-          link="/template/dashboard"
-          index="dashboard"
+          link="/app/menu"
+          index="/app/menu"
           badge="9"
         />
         <h5 className={s.navTitle}>TEMPLATE</h5>
         <LinksGroup
           onActiveSidebarItemChange={activeItem => props.dispatch(changeActiveSidebarItem(activeItem))}
           activeItem={props.activeItem}
-          header="Typography"
+          header="Solicitud de salidas"
           isHeader
           iconName={<i className={'eva eva-text-outline'}/>}
-          link="/template/typography"
-          index="typography"
-        />
-        <LinksGroup
-          onActiveSidebarItemChange={activeItem => props.dispatch(changeActiveSidebarItem(activeItem))}
-          activeItem={props.activeItem}
-          header="Tables"
-          isHeader
-          iconName={<i className={'eva eva-grid-outline'}/>}
-          link="/template/tables"
-          index="tables"
-        />
-        <LinksGroup
-          onActiveSidebarItemChange={activeItem => props.dispatch(changeActiveSidebarItem(activeItem))}
-          activeItem={props.activeItem}
-          header="Notifications"
-          isHeader
-          iconName={<i className={'eva eva-bell-outline'}/>}
-          link="/template/notifications"
-          index="notifications"
-        />
-        <LinksGroup
-          onActiveSidebarItemChange={activeItem => props.dispatch(changeActiveSidebarItem(activeItem))}
-          activeItem={props.activeItem}
-          header="UI Elements"
-          isHeader
-          iconName={<i className={'eva eva-cube-outline'}/>}
-          link="/template/uielements"
-          index="uielements"
+          link="/app/request/"
+          index="/app/request/"
           childrenLinks={[
             {
-              header: 'Charts', link: '/template/ui-elements/charts',
+              header: 'Registrar', link: '/app/request/register',
             },
             {
-              header: 'Icons', link: '/template/ui-elements/icons',
-            },
-            {
-              header: 'Google Maps', link: '/template/ui-elements/maps',
+              header: 'Listar', link: '/app/request/list',
             },
           ]}
         />
+        <LinksGroup
+          onActiveSidebarItemChange={activeItem => props.dispatch(changeActiveSidebarItem(activeItem))}
+          activeItem={props.activeItem}
+          header="Productos"
+          isHeader
+          iconName={<i className={'eva eva-grid-outline'}/>}
+          link="/app/order/"
+          index="/app/order/"
+          childrenLinks={[
+            {  header: 'Registrar', link: '/app/order/request',  },
+            {  header: 'Listar', link: '/app/order/order-list',  },
+            {  header: 'Solicitar a proveedor', link: '/app/order/register',  },
+            {  header: 'Listar solicitudes', link: '/app/order/request-list',  },
+          ]}
+        />
+        <LinksGroup
+          onActiveSidebarItemChange={activeItem => props.dispatch(changeActiveSidebarItem(activeItem))}
+          activeItem={props.activeItem}
+          header="Almacen"
+          isHeader
+          iconName={<i className={'eva eva-home-outline'}/>}
+          link="/app/storehouse/"
+          index="/app/storehouse/"
+          childrenLinks={[
+            {  header: 'Registrar', link: '/app/storehouse/register',  },
+            {  header: 'Listar', link: '/app/storehouse/list',  },
+          ]}
+        />
+        <LinksGroup
+          onActiveSidebarItemChange={activeItem => props.dispatch(changeActiveSidebarItem(activeItem))}
+          activeItem={props.activeItem}
+          header="Usuarios"
+          isHeader
+          iconName={<i className={'eva eva-person-outline'}/>}
+          link="/app/user/"
+          index="/app/user/"
+          childrenLinks={[
+            {  header: 'Registrar', link: '/app/user/register',  },
+            {  header: 'Listar', link: '/app/user/list',  },
+          ]}
+        />
       </ul>
-      <div className="bg-widget d-flex mt-auto ml-1">
-        <Button className="rounded-pill my-3 body-2 d-none d-md-block" type="submit" color="secondary-red">Unlock Full Version</Button>
-      </div>
+      {/*
+        <div className="bg-widget d-flex mt-auto ml-1">
+          <Button className="rounded-pill my-3 body-2 d-none d-md-block" color="secondary-red" onClick={()=>props.logoutUser()}>Desconectarse</Button>
+        </div>*/
+      }
     </nav>
   );
 }
@@ -116,5 +130,10 @@ function mapStateToProps(store) {
     activeItem: store.navigation.activeItem,
   };
 }
+function mapDispatchToProps(dispatch){
+  return {
+    logoutUser: () => dispatch(logoutUser())
+  }
+}
 
-export default withRouter(connect(mapStateToProps)(Sidebar));
+export default withRouter(connect(mapStateToProps/*, mapDispatchToProps*/)(Sidebar));

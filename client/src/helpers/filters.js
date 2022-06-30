@@ -1,12 +1,10 @@
-import { isObject } from 'formik'
-
 export function filter(orders=null, condition){
   if(!orders)return
   let result = {}
   let resultArray = []
   orders.map(order=>{
     for(let element in order){
-      if(isObject(order[element])){
+      if(typeof (order[element]) === 'object'){
         result[order[element][condition]] = order[element][condition]
       }
     }
@@ -24,7 +22,7 @@ export function filterStoreByCondition(orders=null, colorReference=null, aliasRe
   orders.map(order=>{
     for(let producto in order){
       let currentProduct = order[producto]
-      if(isObject(order[producto])&&(
+      if(typeof (order[producto]) === 'object'&&(
         (!colorReference||currentProduct.color===colorReference)
       &&
         (!aliasReference||currentProduct.alias===aliasReference)

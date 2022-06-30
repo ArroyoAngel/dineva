@@ -7,7 +7,7 @@ import axios from 'axios'
 import { addWorkFlow } from '../workflow/actions';
 /* GET_USER */
  
-export const regSolOrder = (payload) => async dispatch => {
+export const regSolOrder = (payload, history) => async dispatch => {
     let imageData = await convert(payload.image)
     let sendImage = {
       data: imageData,
@@ -20,21 +20,32 @@ export const regSolOrder = (payload) => async dispatch => {
     /**ADJUNTAR ESTE URL AL REGISTRO QUE DESEAS */
     const requeriment = await axios.post(`http://localhost:4000/create/solOrder`,{...payload}).then(values=>values.data).catch(err=>err);
     addWorkFlow('create', 'solOrder', requeriment.id, requeriment)
-    console.log(requeriment)
+    history.push('/app/order/request-list')
 }
 
-export const updSolOrder = async (payload) => {
-    let imageData = await convert(payload.cartulina)
-    let sendImage = {
-      data: imageData,
-      name: payload.cartulina.name,
-      type: payload.cartulina.type
+
+export const updSolOrder = async (payload, history) => {
+    const dataset = []
+    
+    for(const image of payload.cartulina){
+      const temp = await convert(image)
+      dataset.push({
+        data: temp, 
+        name: image.name,
+        type: image.type,
+      })
     }
     const prePayload = Object.assign({} , payload)
-    payload.cartulina = await axios.post(`http://localhost:4000/upload`,{...sendImage}).then(values=>values.data).catch(err=>err);
 
+    payload.cartulina = []
+    for(let i=0; i<dataset.length; i++){
+      const URL = await axios.post(`http://localhost:4000/upload`,{...dataset[i]}).then(values=>values.data).catch(err=>err);
+      payload.cartulina.push(URL)
+    }
     const requeriment = await axios.put(`http://localhost:4000/put/solOrder/${payload.code}`,{...payload}).then(values=>values.data).catch(err=>err);
-    addWorkFlow('put','solOrder',payload.code, payload, prePayload)
+    //addWorkFlow('put','solOrder',payload.code, payload, prePayload)
+
+    history.push('/app/menu')
 }
 
 export const getAllReq = () => async dispatch => {

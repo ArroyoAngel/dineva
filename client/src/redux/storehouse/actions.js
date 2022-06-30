@@ -1,5 +1,5 @@
 import {
-  GET_STOREHOUSE, GET_STOREHOUSE_BY_ID, REG_STOREHOUSE,
+  GET_STOREHOUSE, GET_STOREHOUSE_BY_ID, REG_STOREHOUSE, UPDATE_STOREHOUSE
 } from '../actions';
 import axios from 'axios'
 import { addWorkFlow } from '../workflow/actions'
@@ -11,11 +11,22 @@ export const getStorehouse = () => async dispatch => {
       payload: storehouses
   })
 }
-export const regStorehouse = (payload) => async dispatch => {
+export const regStorehouse = (payload, history) => async dispatch => {
   const storehouse = await axios.post(`http://localhost:4000/create/storehouse`,payload).then(values=>values.data).catch(err=>err);
   addWorkFlow('create', 'storehouse', storehouse.id, storehouse)
+  history.push('/app/storehouse/list')
   return dispatch({
       type: REG_STOREHOUSE,
+      payload: storehouse
+  })
+}
+
+export const updateStorehouse = (payload, id, history) => async dispatch => {
+  const storehouse = await axios.put(`http://localhost:4000/put/storehouse/${id}`,{...payload}).then(values=>values.data).catch(err=>err);
+  addWorkFlow('update', 'storehouse', storehouse.id, storehouse)
+  history.push('/app/storehouse/list')
+  return dispatch({
+      type: UPDATE_STOREHOUSE,
       payload: storehouse
   })
 }

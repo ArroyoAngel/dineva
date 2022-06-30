@@ -37,10 +37,16 @@ import mariaImage from "../../assets/navbarMenus/mariaImage.jpg";
 import notificationImage from "../../assets/navbarMenus/notificationImage.jpg";
 import userImg from "../../assets/user.svg";
 
+import AdminIcon from  "../../assets/admin.png"
+import BodegueroIcon from  "../../assets/bodeguero.png"
+
 import s from "./Header.module.scss";
 import "animate.css";
 
 const Header = (props) => {
+  const name = localStorage.getItem('user_name')
+  const role = localStorage.getItem('user_rol')
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [notificationsOpen, setNotificationsOpen] = useState(false);
 
@@ -77,28 +83,8 @@ const Header = (props) => {
           <MenuIcon className={s.menuIcon} />
         </NavLink>
       </div>
-      <Form className="d-none d-sm-block" inline>
-        <FormGroup>
-          <InputGroup className='input-group-no-border'>
-            <Input id="search-input" placeholder="Search Dashboard" className='focus'/>
-            <InputGroupAddon addonType="prepend">
-              <span>
-                <SearchBarIcon/>
-              </span>
-            </InputGroupAddon>
-          </InputGroup>
-        </FormGroup>
-      </Form>
       <Nav className="ml-auto">
-        <NavItem className="d-sm-none mr-4">
-          <NavLink
-            className=""
-            href="#"
-          >
-            <SearchIcon />
-          </NavLink>
-        </NavItem>
-        <Dropdown nav isOpen={menuOpen} toggle={() => toggleMenu()} className="tutorial-dropdown mr-2 mr-sm-3">
+        {/*<Dropdown nav isOpen={menuOpen} toggle={() => toggleMenu()} className="tutorial-dropdown mr-2 mr-sm-3">
           <DropdownToggle nav>
             <div className={s.navbarBlock}>
               <i className={'eva eva-bell-outline'}/>
@@ -123,18 +109,18 @@ const Header = (props) => {
             <DropdownItem><img src={calendarIcon} alt="Calendar Icon"/><span>1 event has been canceled and ...</span></DropdownItem>
             <DropdownItem><img src={envelopeIcon} alt="Envelope Icon"/><span>you have 2 new messages</span></DropdownItem>
           </DropdownMenu>
-        </Dropdown>
+        </Dropdown>*/}
         <Dropdown isOpen={notificationsOpen} toggle={() => toggleNotifications()} nav id="basic-nav-dropdown" className="ml-3">
           <DropdownToggle nav caret className="navbar-dropdown-toggle">
             <span className={`${s.avatar} rounded-circle float-left mr-2`}>
-              <img src={userImg} alt="User"/>
+              <img src={role==='Secretario'?AdminIcon:BodegueroIcon} alt="User"/>
             </span>
-            <span className="small d-none d-sm-block ml-1 mr-2 body-1">Christina Carey</span>
+            <span className="small d-none d-sm-block ml-1 mr-2 body-1">{name}</span>
           </DropdownToggle>
           <DropdownMenu className="navbar-dropdown profile-dropdown" style={{ width: "194px" }}>
-            <DropdownItem className={s.dropdownProfileItem}><ProfileIcon/><span>Profile</span></DropdownItem>
+            {/*<DropdownItem className={s.dropdownProfileItem}><ProfileIcon/><span>Profile</span></DropdownItem>
             <DropdownItem className={s.dropdownProfileItem}><TasksIcon/><span>Tasks</span></DropdownItem>
-            <DropdownItem className={s.dropdownProfileItem}><MessagesIcon/><span>Messages</span></DropdownItem>
+            <DropdownItem className={s.dropdownProfileItem}><MessagesIcon/><span>Messages</span></DropdownItem>*/}
             <NavItem>
               <NavLink onClick={() => doLogout()} href="#">
                 <button className="btn btn-primary rounded-pill mx-auto logout-btn" type="submit"><img src={logoutIcon} alt="Logout"/><span className="ml-1">Logout</span></button>

@@ -3,19 +3,32 @@ import jwt from 'jsonwebtoken'
 import {
     GET_USER, REG_USER, LOGIN_USER, LOGOUT_USER, GET_USERS
 } from '../actions';
+import { addWorkFlow } from '../workflow/actions'
 
 /* GET_USER */
 
 export const getUser = (payload) => async dispatch => {
-    const user = await axios.get(`localhost:4000/user/${payload.id}`).then(values=>values.data()).catch(err=>err);
+    const user = await axios.get(`http://localhost:4000/get/user/${payload.id}`).then(values=>values.data()).catch(err=>err);
     return dispatch({
         type: GET_USER,
         payload: user
     });
 };
 
-export const updateUser = (id, newPayload) => async dispatch => {
-    const result = await axios.put(`http://localhost:4000/put/users/${id}`,{...newPayload}).then(values=>values.data).catch(err=>err);
+export const updateUser = (id, newPayload, history) => async dispatch => {
+    const body = {
+        cargo: newPayload.cargo,
+        ci: newPayload.ci,
+        name: newPayload.name,
+        lastname: newPayload.lastname,
+        phone: newPayload.phone,
+    }
+    const previous = await axios.get(`http://localhost:4000/get/user/${id}`).then(values=>values.data).catch(err=>err);
+    const result = await axios.put(`http://localhost:4000/put/users/${id}`,{...body}).then(values=>values.data).catch(err=>err);
+    if(previous!==newPayload){
+        addWorkFlow('update', 'users', id, newPayload, previous)
+    }
+    history.push('/app/user/list')
 }
 
 export const getUsers = () => async dispatch => {
@@ -26,16 +39,25 @@ export const getUsers = () => async dispatch => {
     });
 };
 
-export const regUser = (payload) => async dispatch => {
-    const user = await axios.post(`http://localhost:4000/create/user`,{...payload }).then(values=>values.data()).catch(err=>err);
-    return dispatch({
+export const regUser = (payload, history) => async dispatch => {
+    debugger
+    const user = await axios.post(`http://localhost:4000/create/user`,{...payload }).then(values=>{
+        debugger
+        values.data()
+    }).catch(err=>err);
+    debugger
+    history.push('/app/user/list')
+    /*return dispatch({
         type: REG_USER,
         payload: user
-    })
+    })*/
 }
 
 export const loginUser = (payload) => async dispatch => {
+    debugger
     const data = await axios.post(`http://localhost:4000/authentication/user`,{ user: payload.user, password: payload.password }).then(values=>values.data).catch(err=>err);
+    console.log(data)
+    debugger
     const info = jwt.verify(data, 'keyPassword', (err, decoded)=>{
         if(err){
             localStorage.setItem('user_id', null);
