@@ -1,4 +1,15 @@
 //FORMULARIOS DE REGISTRO
+
+export const firebaseConfig = {
+  apiKey: "AIzaSyAqeDxprD4j69Dxa6Oi4X4SEJcTjUhSGoE",
+  authDomain: "importadora-dineva.firebaseapp.com",
+  projectId: "importadora-dineva",
+  storageBucket: "importadora-dineva.appspot.com",
+  messagingSenderId: "262072248808",
+  appId: "1:262072248808:web:3bda74b5033eac63611c5d",
+  measurementId: "G-TQWWXF0ZPD"
+};
+
 export const user = [
   { name: "Luis Angel", lastname: "Arroyo Acuña", phone: "73666496", ci: "9607943", cargo: "Secretario"},
   { name: "Lucia", lastname: "Acuña Ninaja", phone: "71032503", ci: "1828403", cargo: "Encargado de almacén"},

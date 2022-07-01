@@ -6,14 +6,14 @@ import axios from 'axios'
 import { addWorkFlow } from '../workflow/actions';
 /* GET_USER */
 export const getAllRequest = () => async dispatch => {
-  const requests = await axios.get(`http://localhost:4000/get/request`).then(values=>values.data).catch(err=>err);
+  const requests = await axios.get(`https://dineva-server.herokuapp.com/get/request`).then(values=>values.data).catch(err=>err);
   return dispatch({
       type: GET_REQUEST,
       payload: requests
   })
 }
 export const regRequest = (payload, history) => async dispatch => {
-  const ordersBD = await axios.get(`http://localhost:4000/get/order`).then(values=>values.data).catch(err=>err);
+  const ordersBD = await axios.get(`https://dineva-server.herokuapp.com/get/order`).then(values=>values.data).catch(err=>err);
   const orders  = {}
   ordersBD.map(order => {
     orders[order.order] = order.id
@@ -41,18 +41,16 @@ export const regRequest = (payload, history) => async dispatch => {
     })
   }
   
-  const request = await axios.post(`http://localhost:4000/create/request`,payload).then(values=>values.data).catch(err=>err);
+  const request = await axios.post(`https://dineva-server.herokuapp.com/create/request`,payload).then(values=>values.data).catch(err=>err);
   addWorkFlow('create', 'request', request.id, request, {})
 
-  await axios.put(`http://localhost:4000/update/store`,{...newPayload}).then(values=>values.data).catch(err=>err);
+  await axios.put(`https://dineva-server.herokuapp.com/update/store`,{...newPayload}).then(values=>values.data).catch(err=>err);
   addWorkFlow('update', 'store', request.id, newPayload, prePayload )
-  localStorage.removeItem('cart')
-  debugger
   history.push('/app/request/list')
 }
 
 export const getRequestByID = (payload) => async dispatch => {
-  let request = await axios.get(`http://localhost:4000/get/request/${payload.id}`).then(values=>values.data).catch(err=>err);
+  let request = await axios.get(`https://dineva-server.herokuapp.com/get/request/${payload.id}`).then(values=>values.data).catch(err=>err);
   request = convertJSON_ARRAY(request)
   return dispatch({
       type: GET_REQUEST_BY_ID,

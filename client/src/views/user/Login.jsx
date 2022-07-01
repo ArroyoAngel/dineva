@@ -18,7 +18,6 @@ class Login extends Component {
     }
     doLogin = (e) => {
         e.preventDefault();
-        debugger
         this.props.loginUser({ password: this.state.password, user: this.state.user })
     }
     

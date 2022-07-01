@@ -44,9 +44,8 @@ const Sidebar = (props) => {
           iconName={<i className={'eva eva-home-outline'}/>}
           link="/app/menu"
           index="/app/menu"
-          badge="9"
         />
-        <h5 className={s.navTitle}>TEMPLATE</h5>
+        <h5 className={s.navTitle}>Actividades</h5>
         <LinksGroup
           onActiveSidebarItemChange={activeItem => props.dispatch(changeActiveSidebarItem(activeItem))}
           activeItem={props.activeItem}
@@ -72,6 +71,8 @@ const Sidebar = (props) => {
           iconName={<i className={'eva eva-grid-outline'}/>}
           link="/app/order/"
           index="/app/order/"
+          
+          badge="9"
           childrenLinks={[
             {  header: 'Registrar órden recibida', link: '/app/order/register',  },
             {  header: 'Listar órdenes recibidas', link: '/app/order/order-list',  },

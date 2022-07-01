@@ -20,19 +20,19 @@ export const regOrder = (payload) => async dispatch => {
   payload.provider = payload.provider.value
   payload = { ...payload, ...payload.file.json }
   //CORREGIR A GET_BY_UID
-  let storehouses = await axios.get(`http://localhost:4000/get/storehouse`).then(values=>values.data).catch(err=>err);
+  let storehouses = await axios.get(`https://dineva-server.herokuapp.com/get/storehouse`).then(values=>values.data).catch(err=>err);
   let store = await storehouses.find(e=>e.id===payload.storehouse).store
   store = store?store:[]
   store.push(payload.order)
-  await axios.put(`http://localhost:4000/put/storehouse/${payload.storehouse}`,{...storehouses.find(e=>e.id===payload.storehouse)}).then(values=>values.data).catch(err=>err);
+  await axios.put(`https://dineva-server.herokuapp.com/put/storehouse/${payload.storehouse}`,{...storehouses.find(e=>e.id===payload.storehouse)}).then(values=>values.data).catch(err=>err);
   //FIN CORREGIR
-  payload.file = await axios.post(`http://localhost:4000/upload`,{...sendFile}).then(values=>values.data).catch(err=>err);
-  const order = await axios.post(`http://localhost:4000/create/order`,payload).then(values=>values.data()).catch(err=>err);
+  payload.file = await axios.post(`https://dineva-server.herokuapp.com/upload`,{...sendFile}).then(values=>values.data).catch(err=>err);
+  const order = await axios.post(`https://dineva-server.herokuapp.com/create/order`,payload).then(values=>values.data()).catch(err=>err);
   addWorkFlow('create', 'order', order.id, order)
 }
 
 export const getAllOrder = () => async dispatch => {
-  let orders = await axios.get(`http://localhost:4000/get/order`).then(values=>values.data).catch(err=>err);
+  let orders = await axios.get(`https://dineva-server.herokuapp.com/get/order`).then(values=>values.data).catch(err=>err);
   return dispatch({
       type: GET_ORDER,
       payload: orders
@@ -40,7 +40,7 @@ export const getAllOrder = () => async dispatch => {
 }
 
 export const getOrderByID = (payload) => async dispatch => {
-  let order = await axios.get(`http://localhost:4000/order/${payload.id}`).then(values=>values.data).catch(err=>err);
+  let order = await axios.get(`https://dineva-server.herokuapp.com/order/${payload.id}`).then(values=>values.data).catch(err=>err);
   order = convertJSON_ARRAY(order)
   return dispatch({
       type: GET_ORDER_BY_ID,

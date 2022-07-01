@@ -5,6 +5,7 @@ import { getWorkflow } from '../../redux/workflow/actions'
 
 
 import Table from '../../components/Table'
+import './Menu.scss'
 import { Col, FormGroup, FormText, Input, Modal, ModalBody, Row } from "reactstrap";
 class Menu extends Component {
     constructor(props){
@@ -90,8 +91,10 @@ class Menu extends Component {
         }
     }
 
-    showMore(id){
-        const element = this.state.workflow.find(e=>e.id===id)
+    showMore(element){
+        if(element.collection==='product'){
+            
+        }
         const labels_backup = []
         const labels_payload = []
         for(let i in element.backup){
@@ -115,17 +118,25 @@ class Menu extends Component {
     render(){
         return (
             <Fragment>
-                <Table 
-                    data={this.state.workflow.map(item=>({...item, edit: this.showMore}))} 
-                    cols={[ 
-                        { header: 'Responsable', field: 'actor.name' },
-                        { header: 'Acción', field: 'action' },
-                        { header: 'Colección', field: 'collection' },
-                        { header: 'Documento', field: 'document' },
-                        { header: 'Fecha', field: 'date' },
-                    ]}
-                    count={5}
-                />
+                {
+                    /*<Table 
+                        data={ this.state.workflow }
+                        cols={[ 
+                            { header: 'Responsable', field: 'actor.name' },
+                            { header: 'Acción', field: 'action' },
+                            { header: 'Colección', field: 'collection' },
+                            { header: 'Documento', field: 'document' },
+                            { header: 'Fecha', field: 'date' },
+                            { header: 'Ver mas', field: '', DOM: ( value )=>this.showMore( value ) },
+                        ]}
+                        count={5}
+                    />*/
+                }
+                {
+                    this.state.workflow.map(item => {
+                       return  <div onClick={()=>this.showMore( item )} className="item-workflow">{`${item.actor.name} ${item.action} ${item.collection} el ${item.date}`}</div>
+                    })
+                }
                 <Modal isOpen={this.state.isOpen} toggle={()=>this.setState({ isOpen: !this.state.isOpen})}>
                     <ModalBody>
                         <Row>

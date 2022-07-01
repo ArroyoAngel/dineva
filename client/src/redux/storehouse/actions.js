@@ -5,14 +5,14 @@ import axios from 'axios'
 import { addWorkFlow } from '../workflow/actions'
 
 export const getStorehouse = () => async dispatch => {
-  const storehouses = await axios.get(`http://localhost:4000/get/storehouse`).then(values=>values.data).catch(err=>err);
+  const storehouses = await axios.get(`https://dineva-server.herokuapp.com/get/storehouse`).then(values=>values.data).catch(err=>err);
   return dispatch({
       type: GET_STOREHOUSE,
       payload: storehouses
   })
 }
 export const regStorehouse = (payload, history) => async dispatch => {
-  const storehouse = await axios.post(`http://localhost:4000/create/storehouse`,payload).then(values=>values.data).catch(err=>err);
+  const storehouse = await axios.post(`https://dineva-server.herokuapp.com/create/storehouse`,payload).then(values=>values.data).catch(err=>err);
   addWorkFlow('create', 'storehouse', storehouse.id, storehouse)
   history.push('/app/storehouse/list')
   /*return dispatch({
@@ -22,7 +22,7 @@ export const regStorehouse = (payload, history) => async dispatch => {
 }
 
 export const updateStorehouse = (payload, id, history) => async dispatch => {
-  const storehouse = await axios.put(`http://localhost:4000/put/storehouse/${id}`,{...payload}).then(values=>values.data).catch(err=>err);
+  const storehouse = await axios.put(`https://dineva-server.herokuapp.com/put/storehouse/${id}`,{...payload}).then(values=>values.data).catch(err=>err);
   addWorkFlow('update', 'storehouse', storehouse.id, storehouse)
   history.push('/app/storehouse/list')
   return dispatch({
@@ -31,7 +31,7 @@ export const updateStorehouse = (payload, id, history) => async dispatch => {
   })
 }
 export const getStorehouseByID = (payload) => async dispatch => {
-  let storehouse = await axios.get(`http://localhost:4000/get/storehouse/${payload.id}`).then(values=>values.data).catch(err=>err);
+  let storehouse = await axios.get(`https://dineva-server.herokuapp.com/get/storehouse/${payload.id}`).then(values=>values.data).catch(err=>err);
   storehouse = convertJSON_ARRAY(storehouse)
   return dispatch({
       type: GET_STOREHOUSE_BY_ID,
