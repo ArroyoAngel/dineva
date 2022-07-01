@@ -19,13 +19,14 @@ class Register extends Component {
           provider: '',
           code: '',
           description: '',
-
+          limit: 1,
           viewImage: DefaultImage,
         }
         
 
         this.isEdit = this.isEdit.bind(this)
         this.changeCred = this.changeCred.bind(this)
+        this.addLimit = this.addLimit.bind(this)
     }
     isEdit(){
       const { id } = this.props.match.params
@@ -50,14 +51,16 @@ class Register extends Component {
     }
     doRegister(event) {
       event.preventDefault();
+      const limit = new Date().setMonth(new Date().getMonth()+this.state.limit)
       let payload = {
         code: this.state.code,
         description: this.state.description,
         image: this.state.file,
         provider: this.state.provider,
         accepted: "pendiente",
+        limit,
         detail: "",
-        cartulina: null,
+        cartulina: [],
         solicitante_name: localStorage.getItem('user_name'),
         solicitante_id: localStorage.getItem('user_id')
       }
@@ -70,6 +73,16 @@ class Register extends Component {
             file
         })
     }
+
+    addLimit(){
+      if(this.state.limit>5){
+        this.setState({  limit: 1 })
+      }else{
+        let limit = this.state.limit+1
+        this.setState({ limit })
+      }
+    }
+
     render(){
         const { id } = this.props.match.params
         const { name } = this.state
@@ -119,6 +132,12 @@ class Register extends Component {
                 />
               </FormGroup>
 
+              <FormGroup  className="my-3">
+                <div className="d-flex justify-content-between">
+                  <FormText>Límite de confirmación</FormText>
+                </div>
+                <Button onClick={()=>this.addLimit()}>{`${this.state.limit} meses`}</Button>
+              </FormGroup>
 
               <FormGroup className="my-3" onClick={()=>this.ref.current.click()} style={{ cursor: 'pointer'}}>
                 <div className="d-flex justify-content-between">

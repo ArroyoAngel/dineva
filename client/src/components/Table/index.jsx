@@ -68,30 +68,10 @@ class TableComponent extends Component {
     render(){
         return (
             <Widget>
-              <div className={s.tableTitle}>
-                <div className="headline-2">States Colors</div>
-                <div className="d-flex">
-                  <a href="/#"><img src={searchIcon} alt="Search"/></a>
-                  <a href="/#"><img className="d-none d-sm-block" src={cloudIcon} alt="Cloud" /></a>
-                  <a href="/#"><img src={printerIcon} alt="Printer" /></a>
-                  <a href="/#"><img className="d-none d-sm-block" src={optionsIcon} alt="Options" /></a>
-                  <a href="/#"><img src={funnelIcon} alt="Funnel" /></a>
-                </div>
-              </div>
               <div className="widget-table-overflow">
                 <Table className={`table-striped table-borderless table-hover ${s.statesTable}`} responsive>
                   <thead>
                   <tr>
-                    <th className={s.checkboxCol}>
-                      <div className="checkbox checkbox-primary">
-                        <input
-                          className="styled"
-                          id="checkbox100"
-                          type="checkbox"
-                        />
-                        <label htmlFor="checkbox100"/>
-                      </div>
-                    </th>
                     {
                       this.props.cols.map((element, key)=>{
                         return <th key={key}>{element.header}</th>
@@ -107,20 +87,13 @@ class TableComponent extends Component {
                     )
                     .map(item => (
                       <tr key={uuidv4()}>
-                        <td>
-                          <div className="checkbox checkbox-primary">
-                            <input
-                              id={item.id}
-                              className="styled"
-                              type="checkbox"
-                            />
-                            <Label htmlFor={item.id} />
-                          </div>
-                        </td>
                         {/*<td className="d-flex align-items-center"><img className={s.image} src={item.img} alt="User"/><span className="ml-3">{item.name}</span></td>*/}
                         {
                           this.props.cols.map((element, key)=>{
-                            const result = eval(`item.${element.field}`)
+                            const result = element.field?eval(`item.${element.field}`):item
+                            if(element.DOM){
+                              return <td key={key}>{element.DOM(result)}</td>
+                            }
                             if(!element.type || element.type==='text')return <td key={key}>{result}</td>
                             if(element.type==='image')return (
                               <td className="d-flex align-items-center" key={key}>

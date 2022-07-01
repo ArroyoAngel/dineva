@@ -16,16 +16,17 @@ export const regSolOrder = (payload, history) => async dispatch => {
     }
   
     /* URL DEL DOCUMENTO CUALQUIERA */
+    debugger
     payload.image = await axios.post(`http://localhost:4000/upload`,{...sendImage}).then(values=>values.data).catch(err=>err);
     /**ADJUNTAR ESTE URL AL REGISTRO QUE DESEAS */
     const requeriment = await axios.post(`http://localhost:4000/create/solOrder`,{...payload}).then(values=>values.data).catch(err=>err);
-    addWorkFlow('create', 'solOrder', requeriment.id, requeriment)
+    addWorkFlow('create', 'solOrder', requeriment.id, payload, {})
     history.push('/app/order/request-list')
 }
 
 
 export const updSolOrder = async (payload, history) => {
-    const dataset = []
+    /*const dataset = []
     
     for(const image of payload.cartulina){
       const temp = await convert(image)
@@ -34,16 +35,16 @@ export const updSolOrder = async (payload, history) => {
         name: image.name,
         type: image.type,
       })
-    }
+    }*/
     const prePayload = Object.assign({} , payload)
-
-    payload.cartulina = []
+    /*payload.cartulina = []
     for(let i=0; i<dataset.length; i++){
       const URL = await axios.post(`http://localhost:4000/upload`,{...dataset[i]}).then(values=>values.data).catch(err=>err);
       payload.cartulina.push(URL)
-    }
+    }*/
+    const previous = await axios.get(`http://localhost:4000/get/solOrder/${payload.code}`).then(values=>values.data).catch(err=>err);
     const requeriment = await axios.put(`http://localhost:4000/put/solOrder/${payload.code}`,{...payload}).then(values=>values.data).catch(err=>err);
-    //addWorkFlow('put','solOrder',payload.code, payload, prePayload)
+    addWorkFlow('put','solOrder', payload.code, previous, { ...previous, ...payload})
 
     history.push('/app/menu')
 }

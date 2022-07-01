@@ -15,10 +15,10 @@ export const regStorehouse = (payload, history) => async dispatch => {
   const storehouse = await axios.post(`http://localhost:4000/create/storehouse`,payload).then(values=>values.data).catch(err=>err);
   addWorkFlow('create', 'storehouse', storehouse.id, storehouse)
   history.push('/app/storehouse/list')
-  return dispatch({
+  /*return dispatch({
       type: REG_STOREHOUSE,
       payload: storehouse
-  })
+  })*/
 }
 
 export const updateStorehouse = (payload, id, history) => async dispatch => {

@@ -25,15 +25,38 @@ class Menu extends Component {
         switch(collection){
             case 'users':
                 return {
-                    create: 'Ha Registrado un',
-                    update: 'Ha Editado un',
-                    delete: 'Ha eliminado un'
+                    create: 'ha Registrado un',
+                    update: 'ha Editado un',
+                    delete: 'ha eliminado un',
+                    put: 'ha Editado un'
+                }
+            case 'solOrder':
+                return {
+                    create: 'ha realizado una',
+                    update: 'ha actualizado una',
+                    delete: 'ha eliminado una',
+                    put: 'ha actualizado una'
+                }
+            case 'store':
+                return {
+                    create: 'ha vendido',
+                    update: 'ha Editado un',
+                    delete: 'ha eliminado un',
+                    put: 'ha Editado un'
+                }
+            case 'request':
+                return {
+                    create: 'ha vendido una',
+                    update: 'ha Editado un',
+                    delete: 'ha eliminado un',
+                    put: 'ha Editado un'
                 }
             default: 
                 return {
-                    create: 'Ha Creado un',
-                    update: 'Ha Editado un',
-                    delete: 'Ha eliminado un'
+                    create: 'ha Creado un',
+                    update: 'ha Editado un',
+                    delete: 'ha eliminado un',
+                    put: 'ha Editado un'
                 }
         }
     }
@@ -43,7 +66,10 @@ class Menu extends Component {
             const collection = {
                 'users': 'Usuario',
                 'storehouse': 'Almacen',
-                'orders': 'Orden'
+                'orders': 'Orden',
+                'solOrder': 'solicitud a proveedor',
+                'store': 'producto',
+                'request': 'colección de telas'
             }
             const fullWorkFlow = workflow.map(element=>{
                 const state = this.getAction(element.collection)
@@ -143,6 +169,7 @@ class Menu extends Component {
     }
 }
 const mapStateToProps = ({ workflow }) => {
+    console.log(workflow)
     return { 
         workflow,
      }

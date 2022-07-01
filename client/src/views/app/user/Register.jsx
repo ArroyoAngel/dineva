@@ -18,7 +18,7 @@ class Register extends Component {
           name: '',
           phone: '',
           lastname: '',
-          email: '',
+          user: '',
           password: ''
         }
         
@@ -59,7 +59,7 @@ class Register extends Component {
         name: this.state.name,
         lastname: this.state.lastname,
         phone: this.state.phone,
-        email: this.state.email,
+        user: this.state.user,
         password: this.state.password
       }
       if(id){
@@ -166,13 +166,13 @@ class Register extends Component {
                   <FormText>Email</FormText>
                 </div>
                 <Input
-                  id="email"
+                  id="user"
                   className="input-transparent pl-3"
-                  value={this.state.email}
+                  value={this.state.user}
                   onChange={(event => this.changeCred(event))}
-                  type="email"
+                  type="user"
                   required
-                  name="email"
+                  name="user"
                   placeholder="Correo electronico"
                 />
               </FormGroup>

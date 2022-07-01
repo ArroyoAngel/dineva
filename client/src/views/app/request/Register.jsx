@@ -61,7 +61,7 @@ class Register extends Component {
       })
     }
     edit(element){
-      console.log(element)
+      element.specification_selected = element.specification[0]
       this.setState({
         isOpen: true,
         product: element
@@ -179,27 +179,32 @@ class Register extends Component {
                   </Input>
                 </FormGroup>
                 <Table 
-                    data={filterStoreByCondition(this.state.orders, this.state.color, this.state.alias).map(item=>({...item, edit: this.edit}))} 
+                    data={filterStoreByCondition(this.state.orders, this.state.color, this.state.alias)} 
                     cols={[ 
                         { header: 'Alias', field: 'alias' },
                         { header: 'Especificaciones', field: 'specification' },
                         { header: 'Piesas', field: 'pcs' },
                         { header: 'Metraje', field: 'mtr' },
                         { header: 'Color', field: 'color' },
+                        { header: 'Quitar', field: '', DOM: (value) => <button onClick={()=>this.edit(value)}>Agregar</button> },
                     ]}
                     count={5}
                 />
-                <Table 
-                    data={this.state.cart.map(item=>({...item, edit: this.dropCart}))} 
+                {
+                  this.state.cart.length > 0 && 
+                  <Table 
+                    data={this.state.cart} 
                     cols={[ 
                         { header: 'Alias', field: 'alias' },
                         { header: 'Especificaciones', field: 'specification' },
                         { header: 'Piesas', field: 'pcs' },
                         { header: 'Metraje', field: 'mtr' },
                         { header: 'Color', field: 'color' },
+                        { header: 'Quitar', field: '', DOM: (value) => <button onClick={()=>this.dropCart(value)}>Quitar</button> },
                     ]}
                     count={5}
-                />
+                  />
+                }
                 <div className="bg-widget d-flex justify-content-center">
                   <Button className="rounded-pill my-3" type="submit" color="secondary-red" onClick={()=>this.setState({ openPayload: true })}>REGISTRAR COMPRA</Button>
                 </div>

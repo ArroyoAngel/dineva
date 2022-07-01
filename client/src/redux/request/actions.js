@@ -40,11 +40,14 @@ export const regRequest = (payload, history) => async dispatch => {
       }
     })
   }
-  const request = await axios.post(`http://localhost:4000/create/request`,payload).then(values=>values.data()).catch(err=>err);
-  addWorkFlow('create', 'request', request.id, request)
+  
+  const request = await axios.post(`http://localhost:4000/create/request`,payload).then(values=>values.data).catch(err=>err);
+  addWorkFlow('create', 'request', request.id, request, {})
 
   await axios.put(`http://localhost:4000/update/store`,{...newPayload}).then(values=>values.data).catch(err=>err);
-  addWorkFlow('update', 'store', newPayload, prePayload )
+  addWorkFlow('update', 'store', request.id, newPayload, prePayload )
+  localStorage.removeItem('cart')
+  debugger
   history.push('/app/request/list')
 }
 

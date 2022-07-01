@@ -67,15 +67,15 @@ const Sidebar = (props) => {
         <LinksGroup
           onActiveSidebarItemChange={activeItem => props.dispatch(changeActiveSidebarItem(activeItem))}
           activeItem={props.activeItem}
-          header="Productos"
+          header="Órdenes"
           isHeader
           iconName={<i className={'eva eva-grid-outline'}/>}
           link="/app/order/"
           index="/app/order/"
           childrenLinks={[
-            {  header: 'Registrar', link: '/app/order/request',  },
-            {  header: 'Listar', link: '/app/order/order-list',  },
-            {  header: 'Solicitar a proveedor', link: '/app/order/register',  },
+            {  header: 'Registrar órden recibida', link: '/app/order/register',  },
+            {  header: 'Listar órdenes recibidas', link: '/app/order/order-list',  },
+            {  header: 'Solicitar a proveedor', link: '/app/order/request',  },
             {  header: 'Listar solicitudes', link: '/app/order/request-list',  },
           ]}
         />

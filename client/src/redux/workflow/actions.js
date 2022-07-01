@@ -7,6 +7,7 @@ import {
 export const getWorkflow = () => async dispatch => {
     let workflow = await axios.get(`http://localhost:4000/get/workflow`).then(values=>values.data).catch(err=>err);
     if(!Array.isArray(workflow))workflow=[]
+    
     return dispatch({
         type: GET_WORKFLOW,
         payload: workflow

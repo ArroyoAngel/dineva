@@ -144,7 +144,7 @@ class Register extends Component {
               </FormGroup>
               <FormGroup className="my-3" onClick={()=>this.ref.current.click()} style={{ cursor: 'pointer'}}>
                 <div className="d-flex justify-content-between">
-                  <FormText>Documento</FormText>
+                  <FormText>Documento Excel</FormText>
                 </div>
                 <div style={{ display: 'flex' }}>
                 <div 

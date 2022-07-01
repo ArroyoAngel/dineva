@@ -40,7 +40,7 @@ const AuthRoute = ({ component: Component, authUser, ...rest }) => {
     <Route
       {...rest}
       render={props => {
-        if(true/* authUser && authUser!=="null" */){
+        if(authUser && authUser!=="null"){
           return <Component {...props} />
         }else{
           return <Redirect

@@ -40,12 +40,11 @@ export const getUsers = () => async dispatch => {
 };
 
 export const regUser = (payload, history) => async dispatch => {
-    debugger
     const user = await axios.post(`http://localhost:4000/create/user`,{...payload }).then(values=>{
-        debugger
-        values.data()
+        return values.data()
     }).catch(err=>err);
     debugger
+    addWorkFlow('create', 'users', 's/id nuevo', payload, {})
     history.push('/app/user/list')
     /*return dispatch({
         type: REG_USER,
@@ -54,8 +53,7 @@ export const regUser = (payload, history) => async dispatch => {
 }
 
 export const loginUser = (payload) => async dispatch => {
-    debugger
-    const data = await axios.post(`http://localhost:4000/authentication/user`,{ user: payload.user, password: payload.password }).then(values=>values.data).catch(err=>err);
+    const data = await axios.post(`https://dineva-server.herokuapp.com/authentication/user`,{ user: payload.user, password: payload.password }).then(values=>values.data).catch(err=>err);
     console.log(data)
     debugger
     const info = jwt.verify(data, 'keyPassword', (err, decoded)=>{

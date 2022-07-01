@@ -2,13 +2,16 @@ import { createRef } from "react";
 import { useRef } from "react";
 import { Component, Fragment } from "react";
 import { connect } from 'react-redux'
-import { Button, FormGroup, FormText, Input, Modal, ModalBody, UncontrolledCarousel  } from "reactstrap";
+import { Button, Col, FormGroup, FormText, Input, Modal, ModalBody, Row, UncontrolledCarousel  } from "reactstrap";
 import Table from '../../../components/Table'
 import { getAllReq, updSolOrder } from '../../../redux/solOrder/actions'
 import DefaultImage from '../../../assets/telar.png'
-
 import Widget from "../../../components/Widget/Widget.js";
 import './order.scss'
+
+
+import "react-color-palette/lib/css/styles.css";
+
 
 class List extends Component {
     ref = createRef()
@@ -19,20 +22,23 @@ class List extends Component {
         this.state = {
             request: {
                 cartulina: [],
-                accepted: 'pendiente'
+                accepted: 'pendiente',
             },
             isOpen: false,
             image: DefaultImage,
             AddsCartulina: [],
             AddFiles: [],
+            solOrders: [],
         }
         this.edit = this.edit.bind(this)
         this.changeCred = this.changeCred.bind(this)
         this.doRegister = this.doRegister.bind(this)
+        this.removeColor = this.removeColor.bind(this)
+        this.changeColor = this.changeColor.bind(this)
+        
     }
     
-    edit(id){
-        const element = this.props.solOrders.find(item=>item.id===id)
+    edit(element){
         if(!element.cartulina)element.cartulina = []
         this.setState({
             isOpen: true,
@@ -65,12 +71,12 @@ class List extends Component {
         event.preventDefault();
         let payload = {
           detail: this.state.request.detail,
-          cartulina: this.state.AddFiles,
+          cartulina: this.state.request.cartulina,
           code: this.state.request.id,
           accepted: this.state.request.accepted,
-          create: new Date(),
+          create: new Date().getTime(),
+          limit: this.state.request.limit
         }
-
         this.props.updSolOrder(payload, this.props.history)
         this.setState({
             isOpen: false
@@ -82,18 +88,126 @@ class List extends Component {
         this.setState({
           request: { ...this.state.request, ...temp }
         })
-      }
+    }
+    addColor(){
+        const colors = this.state.request.cartulina
+        colors.push('#6ed165')
+        this.setState({
+            request: {
+                ...this.state.request,
+                cartulina: colors
+            }
+        })
+    }
+    removeColor(){
+    }
+    changeColor(index, event){
+        let colors = this.state.request.cartulina
+        colors[index] = event.target.value
+        this.setState({
+            request: {
+                ...this.state.request,
+                cartulina: colors
+            }
+        })
+    }
+
+    componentDidUpdate(prevProps){
+        if(prevProps.solOrders !==this.props.solOrders){
+            const solOrders = this.props.solOrders.map((solOrder)=>{
+                if(solOrder.accepted==='pendiente')solOrder.accepted='Pendiente'
+                if(solOrder.accepted==='success')solOrder.accepted='Enviado'
+                return solOrder
+            })
+            this.setState({
+                solOrders: solOrders
+            })
+        }
+    }
+
+    getLimit(limit){
+        const diff = limit - new Date().getTime()
+        const month = 3600*1000*24*30
+        const day = 3600*1000*24
+        if(diff>month){
+            const t = (diff/month).toFixed(0)
+            return {
+                label: t>1?'Meses':'Mes',
+                time: (diff/month).toFixed(0),
+                color: '#77d877'
+            }
+        }else if(diff>day){
+            const t = diff/(3600*1000).toFixed(0)
+            return {
+                label: t>1?'Días':'día',
+                time: diff/(3600*1000).toFixed(0),
+                color: 'orange'
+            }
+        }else{
+            const t = (diff/day).toFixed(0)
+            return {
+                label: t>1?'Horas':'Hora',
+                time: t,
+                color: '#ff6e65'
+            }
+        }
+    }
+
+    addTimeLimit(timelimit){
+        const orginRequest = this.props.solOrders.find(e=>e.id===this.state.request.id)
+
+        const request = this.state.request
+
+        const today = new Date()
+        const diff = timelimit - today.getTime()
+        
+        const month = 3600*1000*24*30
+
+        if((diff+month)>month*6){
+            request.limit = orginRequest.limit
+        }else{
+            request.limit += month
+        }
+        this.setState({
+            request,
+        })
+    }
+    resTimeLimit(timelimit){
+        const orginRequest = this.props.solOrders.find(e=>e.id===this.state.request.id)
+
+        const request = this.state.request
+
+        const today = new Date()
+        const diff = timelimit - today.getTime()
+        
+        const month = 3600*1000*24*30
+
+        if((diff-month)<month){
+            request.limit = orginRequest.limit
+        }else{
+            request.limit -= month
+        }
+        this.setState({
+            request,
+        })
+    }
+    
     render(){
         return (
             <Fragment>
                 <Table 
-                    data={this.props.solOrders.map(item=>({...item, edit: this.edit}))} 
+                    data={this.state.solOrders} 
                     cols={[ 
+                        { header: 'Cerrar', field: 'limit', DOM: (value)=>{
+                            const dataTimeLimit = this.getLimit(value);
+                            return <div className="circle-limit" style={{ background: dataTimeLimit.color}}>{`${dataTimeLimit.time} ${dataTimeLimit.label}`}</div>
+                        } },
                         { header: 'Proveedor', field: 'provider' },
                         { header: 'Solicitante', field: 'solicitante_name' },
                         { header: 'Imagen', field: 'image', type: 'image' },
                         { header: 'Detalle', field: 'description' },
                         { header: 'Aprobación', field: 'accepted' },
+                        { header: 'Aprobar', field: '', DOM: (value) => <button onClick={()=>this.edit(value)}>Aprobar</button> },
                     ]}
                     count={5}
                 />
@@ -146,12 +260,49 @@ class List extends Component {
                                 value={this.state.request.detail}
                                 onChange={(event => this.changeCred(event))}
                                 type="text"
-                                required
                                 name="detail"
                                 placeholder="Detalles de confirmación"
                                 />
                             </FormGroup>
-                            <div className="container-images">
+                            
+                            <FormGroup  className="my-3">
+                                <div className="d-flex justify-content-between">
+                                <FormText>Paleta de colores</FormText>
+                                </div>
+                                <div style={{ display: 'flex'}}>
+                                    {
+                                        this.state.request.cartulina.map((color, index)=>{
+                                            return <Input type="color" className="color-picker" key={index}  name="color" value={color} onChange={(e)=>this.changeColor(index,e)}  />
+                                        })
+                                    }
+                                    <div className="add-color-contain" onClick={()=>this.addColor()}>
+                                        <div className="color">+</div>
+                                    </div>
+                                </div>
+                            </FormGroup>
+                            
+                            <Row>
+                                <Col xl='6'>
+                                    
+                                    <FormGroup  className="my-3">
+                                        <div className="d-flex justify-content-between">
+                                        <FormText>Reducir tiempo límite</FormText>
+                                        </div>
+                                        <Button onClick={()=>this.resTimeLimit(this.state.request.limit)}>{`Aumentar`}</Button>
+                                    </FormGroup>
+                                </Col>
+                                
+                                <Col xl='6'>
+                                    <FormGroup  className="my-3">
+                                        <div className="d-flex justify-content-between">
+                                        <FormText>Aumentar tiempo límite</FormText>
+                                        </div>
+                                        <Button onClick={()=>this.addTimeLimit(this.state.request.limit)}>{`Aumentar`}</Button>
+                                    </FormGroup>
+                                </Col>
+                            </Row>
+                            
+                            {/*<div className="container-images">
                             {
                                 this.state.AddsCartulina.map((image, key)=>{
                                     return <div 
@@ -176,7 +327,7 @@ class List extends Component {
                             <input hidden multiple type="file" ref={this.refCartulina} accept=".png,.jpg" onChange={(event) => {
                                     this.loadImages(event.currentTarget.files)
                             }} />
-                            <UncontrolledCarousel items={this.state.request.cartulina.map((image, key)=>({ src: image, header: key, caption: key }))} />
+                        <UncontrolledCarousel items={this.state.request.cartulina.map((image, key)=>({ src: image, header: key, caption: key }))} />*/}
                             <div className="bg-widget d-flex justify-content-center">
                                 <Button className="rounded-pill my-3" type="submit" color="secondary-red">Editar</Button>
                             </div>
