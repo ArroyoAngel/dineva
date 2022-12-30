@@ -1,137 +1,130 @@
-import React from "react";
+import React, { useState } from "react";
+import PropTypes from "prop-types";
+import { withRouter, Redirect, Link } from "react-router-dom";
+import { connect } from "react-redux";
 import {
-  Col,
+  Container,
   Row,
+  Col,
+  Button,
+  FormGroup,
+  FormText,
+  Input,
 } from "reactstrap";
 import Widget from "../../components/Widget/Widget";
+import Footer from "../../components/Footer/Footer";
+import { loginUser } from "../../redux/user/actions";
+import hasToken from "../../services/authService";
 
-const Typography = () => {
-  return (
-    <div>
-      <Row>
-        <Col className="mb-4" xs={12}>
-          <Widget className="widget-p-lg">
-            <Row>
-              <Col xs={12} sm={6} xl={3} className="mb-5 mb-sm-0">
-                <p className="headline-3 mb-4 text-muted">Headlines</p>
-                <div className="mb-4">
-                  <p className="headline-1 mb-0">Headline 1</p>
-                  <p className="body-3 text-muted mb-0">29 px, Semi-bold</p>
-                </div>
-                <div className="mb-4">
-                  <p className="headline-2 mb-0">Headline 2</p>
-                  <p className="body-3 text-muted mb-0">20 px, Semi-bold</p>
-                </div>
-                <div>
-                  <p className="headline-3 mb-0">Headline 2</p>
-                  <p className="body-3 text-muted mb-0">16 px, Semi-bold</p>
-                </div>
-              </Col>
-              <Col xs={12} sm={6} xl={3}>
-                <div className="headline-3 mb-4 text-muted">Body</div>
-                <div className="mb-3">
-                  <p className="body-1 mb-0">Body 1</p>
-                  <p className="body-3 text-muted mb-0">16 px, Regular</p>
-                </div>
-                <div className="mb-3">
-                  <p className="body-2 mb-0">Body 2</p>
-                  <p className="body-3 text-muted mb-0">14 px, Semi-bold</p>
-                </div>
-                <div className="mb-3">
-                  <p className="body-3 mb-0">Body 3</p>
-                  <p className="body-3 text-muted mb-0">14 px, Regular</p>
-                </div>
-                <div>
-                  <p className="label mb-0">Label</p>
-                  <p className="body-3 text-muted mb-0">12 px, Regular</p>
-                </div>
-              </Col>
-              <Col xs={12} xl={6} className="mt-5 mt-xl-0">
-                <p className="headline-3 mb-4 text-muted">Fonts</p>
-                <p className="headline-2 mb-3">Poppins</p>
-                <p className="body-3 text-muted">The goal of this new type was to create a sans serif font which give an impression of both modernism, harmony and roundness. These nuances give Sofia a harmonious and sensible appearance for both texts and headlines. </p>
-                <p className="body-3 text-muted">This typeface is a complete redesign of Sofia initially designed in 2008. this typeface supports a wide range of languages with more than 500 glyphs. </p>
-              </Col>
-            </Row>
-          </Widget>
-        </Col>
-      </Row>
-      <Row className="gutter">
-        <Col className="mb-4" xs={12} lg={6}>
-          <Widget
-            className="widget-p-lg"
-            title={
-              <p className="headline-2 mb-0 text-muted">Semi-Bold Headings </p>
-            }
-          >
-            <h1 className="mb-4">h1 40px h1. Heading Title</h1>
-            <h2 className="mb-4">h2 32px h2. Heading Title</h2>
-            <h3 className="mb-4">h3 28px h3. Heading Title</h3>
-            <h4 className="mb-4">h4 24px h4. Heading Title</h4>
-            <h5 className="mb-4">h5 20px h5. Heading Title</h5>
-            <h6>h6 16px h6. Heading Title</h6>
-          </Widget>
-        </Col>
-        <Col className="mb-4" xs={12} lg={6}>
-          <Widget
-            className="widget-p-lg"
-            title={
-              <p className="headline-2 mb-0 text-muted">Bold Headings </p>
-            }
-          >
-            <h1 className="font-weight-bold mb-4">h1 40px h1. Heading Title</h1>
-            <h2 className="font-weight-bold mb-4">h2 32px h2. Heading Title</h2>
-            <h3 className="font-weight-bold mb-4">h3 28px h3. Heading Title</h3>
-            <h4 className="font-weight-bold mb-4">h4 24px h4. Heading Title</h4>
-            <h5 className="font-weight-bold mb-4">h5 20px h5. Heading Title</h5>
-            <h6 className="font-weight-bold">h6 16px h6. Heading Title</h6>
-          </Widget>
-        </Col>
-      </Row>
-      <Row>
-        <Col className="mb-4">
-          <Widget
-            className="widget-p-lg"
-            title={
-              <p className="headline-2 mb-0 text-muted">Body Text</p>
-            }
-          >
-            <p className="mb-0">In ultricies fermentum aliquet. Pellentesque dui magna, condimentum non ullamcorper at, cursus in sem. Nunc condimentum, purus ac sagittis ultricies, metus leo pharetra mi, non vehicula felis elit et nisi. Etiam venenatis commodo libero, vel ullamcorper nibh lobortis vel. Aliquam auctor porta tortor, nec consequat nibh finibus a. Sed ultrices risus eget iaculis luctus. Mauris vel gravida magna.</p>
-          </Widget>
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={12} lg={6}>
-          <Widget
-            className="widget-p-lg"
-            title={
-              <p className="headline-2 mb-0 text-muted">Body Text</p>
-            }
-          >
-            <Row>
-              <Col xs={12} lg={5}>
-                <p className="mb-2">Basic text</p>
-                <p className="font-weight-light mb-2">Basic light text</p>
-                <p className="font-weight-bold mb-2">Basic bold text</p>
-                <p className="text-uppercase mb-2">Basic uppercase text</p>
-                <p className="text-lowercase mb-2">Basic Lowercase Text</p>
-                <p className="text-capitalize mb-2">Basic capitalize text</p>
-                <p className="font-italic mb-2 mb-lg-0">Basic cursive text</p>
-              </Col>
-              <Col xs={12} lg={7}>
-                <p className="text-muted mb-2"><u>Highlighting underline text</u></p>
-                <p className="text-muted mb-2"><s>Highlighting Strikethrough text</s></p>
-                <p className="font-weight-bold text-muted mb-2">Highlighting bold text</p>
-                <p className="font-italic text-muted mb-2">Highlighting italic text</p>
-                <p className="text-uppercase text-muted mb-2">Highlighting uppercase text</p>
-                <p className="text-muted mb-2">&#8226; bullet text</p>
-              </Col>
-            </Row>
-          </Widget>
-        </Col>
-      </Row>
-    </div>
-  )
+import loginImage from "../../assets/loginImage.svg";
+import SofiaLogo from "../../components/Icons/SofiaLogo.js";
+import GoogleIcon from "../../components/Icons/AuthIcons/GoogleIcon.js";
+import TwitterIcon from "../../components/Icons/AuthIcons/TwitterIcon.js";
+import FacebookIcon from "../../components/Icons/AuthIcons/FacebookIcon.js";
+import GithubIcon from "../../components/Icons/AuthIcons/GithubIcon.js";
+import LinkedinIcon from "../../components/Icons/AuthIcons/LinkedinIcon.js";
+import { Component } from "react";
+
+class Login extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      email: 'admin@flatlogic.com',
+      password: 'password',
+      test: 'asdas'
+    }
+  }
+
+  doLogin(e){
+    e.preventDefault();
+    debugger
+    //this.props.loginUser({ password: this.state.password, user: this.state.email })
+  }
+
+  changeCreds(event){
+    let body = {};
+    body[event.target.name] = event.target.value
+    this.setState(body)
+  }
+
+  render(){
+    return (
+      <Widget className="widget-auth widget-p-lg">
+        <div className="d-flex align-items-center justify-content-between py-3">
+          <p className="auth-header mb-0">Login</p>
+          <div className="logo-block">
+            <SofiaLogo />
+            <p className="mb-0">SOFIA</p>
+          </div>
+        </div>
+        <div className="auth-info my-2">
+          <p>This is a real app with Node.js backend - use <b>"admin@flatlogic.com / password"</b> to login!</p>
+        </div>
+        <form onSubmit={(event) => this.doLogin(event)}>
+          <FormGroup className="my-3">
+            <FormText>Email</FormText>
+            <Input
+              id="email"
+              className="input-transparent pl-3"
+              value={this.state.email}
+              onChange={(event) => this.changeCreds(event)}
+              type="email"
+              required
+              name="email"
+              placeholder="Email"
+            />
+          </FormGroup>
+          <FormGroup  className="my-3">
+            <div className="d-flex justify-content-between">
+              <FormText>Password</FormText>
+              <Link to="/error">Forgot password?</Link>
+            </div>
+            <Input
+              id="password"
+              className="input-transparent pl-3"
+              value={this.state.password}
+              onChange={(event) => this.changeCreds(event)}
+              type="password"
+              required
+              name="password"
+              placeholder="Password"
+            />
+            
+          </FormGroup>
+          <FormGroup  className="my-3">
+            <div className="d-flex justify-content-between">
+              <FormText>INPUT TEST</FormText>
+              <Link to="/error">Forgot password?</Link>
+            </div>
+            <Input
+              id="test"
+              className="input-transparent pl-3"
+              value={this.state.test}
+              onChange={(event) => this.changeCreds(event)}
+              type="text"
+              required
+              name="test"
+              placeholder="Test"
+            />
+          </FormGroup>
+          <div className="bg-widget d-flex justify-content-center">
+            <Button className="rounded-pill my-3" type="submit" color="secondary-red">Login</Button>
+          </div>
+        </form>
+      </Widget>
+    )
+  }
 }
 
-export default Typography;
+const mapStateToProps = (state) => {
+  const { user, loading, error } = state.user;
+  return { user, loading, error };
+};
+const mapDispatchToProps = (dispatch) => ({
+  loginUser: (value) => dispatch(loginUser(value))
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Login);
