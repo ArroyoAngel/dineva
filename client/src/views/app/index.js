@@ -3,18 +3,21 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import Sidebar from "../../components/Sidebar/Sidebar"
 import Header from "../../components/Header/Header"
 import s from "../../components/Layout/Layout.module.scss";
-const Menu = React.lazy(() => import('./Menu'));
-const ViewOrder = React.lazy(() => import('./order'));
-const ViewStorehouse = React.lazy(() => import('./storehouse'));
-const ViewUser = React.lazy(() => import('./user'));
-const ViewRequest = React.lazy(() => import('./request'));
-const App = ({ match }) => {
+
+import Menu from './Menu'
+import ViewOrder from './order'
+import ViewStorehouse from './storehouse'
+import ViewUser from './user'
+import ViewRequest from './request'
+
+const App = (props) => {
+  const { match } = props
   return (
       <Fragment>
         <div className={s.root}>
           <div className={s.wrap}>
             <Sidebar />
-            <Header/>
+            <Header {...props} />
             <Switch>
                 
               <Redirect exact from={`${match.url}/`} to={`${match.url}/menu`} />

@@ -207,7 +207,7 @@ class List extends Component {
                         { header: 'Imagen', field: 'image', type: 'image' },
                         { header: 'Detalle', field: 'description' },
                         { header: 'Aprobación', field: 'accepted' },
-                        { header: 'Aprobar', field: '', DOM: (value) => <button onClick={()=>this.edit(value)}>Aprobar</button> },
+                        { header: 'Aprobar', field: '', DOM: (value) => <button disabled={value.accepted==='Enviado'} onClick={()=>this.edit(value)}>Aprobar</button> },
                     ]}
                     count={5}
                 />
@@ -246,8 +246,8 @@ class List extends Component {
                                 name="accepted"
                                 placeholder="Estado"
                                 >
-                                    <option value={"success"}>Enviado</option>
                                     <option value={"pendiente"}>En espera</option>
+                                    <option value={"success"}>Enviado</option>
                                 </Input>
                             </FormGroup>
                             <FormGroup  className="my-3">
@@ -267,7 +267,7 @@ class List extends Component {
                             
                             <FormGroup  className="my-3">
                                 <div className="d-flex justify-content-between">
-                                <FormText>Paleta de colores</FormText>
+                                    <FormText>Paleta de colores</FormText>
                                 </div>
                                 <div style={{ display: 'flex'}}>
                                     {

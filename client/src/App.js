@@ -22,9 +22,9 @@ import { ToastContainer } from "react-toastify";
 // -- Component Styles
 import "./styles/app.scss";
 
-const ViewUser = React.lazy(() => import('./views/user'));
-const ViewApp = React.lazy(() => import('./views/app'));
-const ViewMain = React.lazy(() => import('./views'));
+import ViewUser from './views/user'
+import ViewApp from './views/app'
+import ViewMain from './views'
 const PrivateRoute = ({ component, ...rest }) => {
   if (!localStorage.getItem("user_id")) {
     return (<Redirect to="/login" />)
@@ -40,7 +40,7 @@ const AuthRoute = ({ component: Component, authUser, ...rest }) => {
     <Route
       {...rest}
       render={props => {
-        if(authUser && authUser!=="null"){
+        if(true){
           return <Component {...props} />
         }else{
           return <Redirect

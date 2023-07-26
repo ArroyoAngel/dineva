@@ -22,6 +22,7 @@ class List extends Component {
       })
     }
     render(){
+      console.log(this.props.requests)
         return (
             <Fragment>
               <Table 

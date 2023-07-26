@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 
 import { getWorkflow } from '../../redux/workflow/actions'
 
-
 import Table from '../../components/Table'
 import './Menu.scss'
 import { Col, FormGroup, FormText, Input, Modal, ModalBody, Row } from "reactstrap";
@@ -62,8 +61,9 @@ class Menu extends Component {
         }
     }
     componentDidUpdate(prevProps){
-        const { workflow } = this.props
+        let { workflow } = this.props
         if(prevProps.workflow !== workflow){
+
             const collection = {
                 'users': 'Usuario',
                 'storehouse': 'Almacen',

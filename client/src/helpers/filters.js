@@ -21,11 +21,12 @@ export function filterStoreByCondition(orders=null, colorReference=null, aliasRe
   let results = []
   orders.map(order=>{
     for(let producto in order){
+      
       let currentProduct = order[producto]
-      if(typeof (order[producto]) === 'object'&&(
-        (!colorReference||currentProduct.color===colorReference)
+      if(typeof (order[producto]) === 'object'&& (order[producto].specification.length>0 && order[producto].pcs > 0) && order[producto].specification.length>0 && (
+        (!colorReference||currentProduct.color===colorReference || colorReference==='all')
       &&
-        (!aliasReference||currentProduct.alias===aliasReference)
+        (!aliasReference||currentProduct.alias===aliasReference || aliasReference==='all')
       )){
         currentProduct.bale = producto
         currentProduct.almacen = order.id

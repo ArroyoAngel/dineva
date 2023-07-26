@@ -60,11 +60,11 @@ const Header = (props) => {
 
   const toggleSidebar = () => {
     if (props.sidebarOpened) {
-      props.dispatch(closeSidebar());
+      props.closeSidebar()
     } else {
       const paths = props.location.pathname.split('/');
       paths.pop();
-      props.dispatch(openSidebar());
+      props.openSidebar()
     }
   }
 
@@ -140,7 +140,9 @@ function mapStateToProps(store) {
   };
 }
 const mapDispatchToProps = (dispatch) => ({
-  logoutUser: () => dispatch(logoutUser())
+  logoutUser: () => dispatch(logoutUser()),
+  closeSidebar: ()=>dispatch(closeSidebar()),
+  openSidebar: ()=>dispatch(openSidebar()),
 })
 
 export default connect(

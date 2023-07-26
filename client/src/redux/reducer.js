@@ -6,7 +6,7 @@ import request from './request/reducer';
 import storehouse from './storehouse/reducer';
 import workflow from './workflow/reducer';
 import navigation from '../reducers/navigation'
-
+//https://dineva-server.herokuapp.com
 const reducer = combineReducers({
     user,
     order,

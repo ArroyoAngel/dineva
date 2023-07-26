@@ -108,7 +108,7 @@ class TableComponent extends Component {
                     ))}
                   </tbody>
                 </Table>
-                <Pagination className="pagination-borderless" aria-label="Page navigation example">
+                <Pagination className="pagination-borderless" aria-label="Page navigation example" >
                   <PaginationItem disabled={this.state.currentPage <= 0}>
                     <PaginationLink
                       onClick={e => this.setFirstTablePage(e, this.state.currentPage - 1)}
@@ -116,6 +116,8 @@ class TableComponent extends Component {
                       href="#top"
                     />
                   </PaginationItem>
+                  <div className="pages">
+                    <div />
                   {[...Array(this.state.pageCount)].map((page, i) =>
                     <PaginationItem active={i === this.state.currentPage} key={i}>
                       <PaginationLink onClick={e => this.setFirstTablePage(e, i)} href="#top">
@@ -123,6 +125,8 @@ class TableComponent extends Component {
                       </PaginationLink>
                     </PaginationItem>
                   )}
+                  <div />
+                  </div>
                   <PaginationItem disabled={this.state.currentPage >= this.state.pageCount - 1}>
                     <PaginationLink
                       onClick={e => this.setFirstTablePage(e, this.state.currentPage + 1)}

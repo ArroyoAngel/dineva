@@ -8,7 +8,7 @@ import { addWorkFlow } from '../workflow/actions'
 /* GET_USER */
 
 export const getUser = (payload) => async dispatch => {
-    const user = await axios.get(`https://dineva-server.herokuapp.com/get/user/${payload.id}`).then(values=>values.data()).catch(err=>err);
+    const user = await axios.get(`http://localhost:4000/get/user/${payload.id}`).then(values=>values.data()).catch(err=>err);
     return dispatch({
         type: GET_USER,
         payload: user
@@ -23,8 +23,8 @@ export const updateUser = (id, newPayload, history) => async dispatch => {
         lastname: newPayload.lastname,
         phone: newPayload.phone,
     }
-    const previous = await axios.get(`https://dineva-server.herokuapp.com/get/user/${id}`).then(values=>values.data).catch(err=>err);
-    const result = await axios.put(`https://dineva-server.herokuapp.com/put/users/${id}`,{...body}).then(values=>values.data).catch(err=>err);
+    const previous = await axios.get(`http://localhost:4000/get/user/${id}`).then(values=>values.data).catch(err=>err);
+    const result = await axios.put(`http://localhost:4000/put/users/${id}`,{...body}).then(values=>values.data).catch(err=>err);
     if(previous!==newPayload){
         addWorkFlow('update', 'users', id, newPayload, previous)
     }
@@ -32,7 +32,7 @@ export const updateUser = (id, newPayload, history) => async dispatch => {
 }
 
 export const getUsers = () => async dispatch => {
-    const users = await axios.get(`https://dineva-server.herokuapp.com/get/users`).then(values=>values.data).catch(err=>err);
+    const users = await axios.get(`http://localhost:4000/get/users`).then(values=>values.data).catch(err=>err);
     return dispatch({
         type: GET_USERS,
         payload: users
@@ -40,7 +40,7 @@ export const getUsers = () => async dispatch => {
 };
 
 export const regUser = (payload, history) => async dispatch => {
-    const user = await axios.post(`https://dineva-server.herokuapp.com/create/user`,{...payload }).then(values=>{
+    const user = await axios.post(`http://localhost:4000/create/user`,{...payload }).then(values=>{
         return values.data()
     }).catch(err=>err);
     addWorkFlow('create', 'users', 's/id nuevo', payload, {})
@@ -52,7 +52,7 @@ export const regUser = (payload, history) => async dispatch => {
 }
 
 export const loginUser = (payload) => async dispatch => {
-    const data = await axios.post(`https://dineva-server.herokuapp.com/authentication/user`,{ user: payload.user, password: payload.password }).then(values=>values.data).catch(err=>err);
+    const data = await axios.post(`http://localhost:4000/authentication/user`,{ user: payload.user, password: payload.password }).then(values=>values.data).catch(err=>err);
     const info = jwt.verify(data, 'keyPassword', (err, decoded)=>{
         if(err){
             localStorage.setItem('user_id', null);

@@ -56,7 +56,7 @@ const Sidebar = (props) => {
           index="/app/request/"
           childrenLinks={[
             {
-              header: 'Registrar', link: '/app/request/register',
+              header: 'Inventario', link: '/app/request/register',
             },
             {
               header: 'Listar', link: '/app/request/list',
@@ -74,10 +74,10 @@ const Sidebar = (props) => {
           
           badge="9"
           childrenLinks={[
-            {  header: 'Registrar órden recibida', link: '/app/order/register',  },
-            {  header: 'Listar órdenes recibidas', link: '/app/order/order-list',  },
             {  header: 'Solicitar a proveedor', link: '/app/order/request',  },
             {  header: 'Listar solicitudes', link: '/app/order/request-list',  },
+            {  header: 'Registrar órden recibida', link: '/app/order/register',  },
+            {  header: 'Listar órdenes recibidas', link: '/app/order/order-list',  },
           ]}
         />
         <LinksGroup

@@ -16,9 +16,9 @@ export const regSolOrder = (payload, history) => async dispatch => {
     }
   
     /* URL DEL DOCUMENTO CUALQUIERA */
-    payload.image = await axios.post(`https://dineva-server.herokuapp.com/upload`,{...sendImage}).then(values=>values.data).catch(err=>err);
+    payload.image = await axios.post(`http://localhost:4000/upload`,{...sendImage}).then(values=>values.data).catch(err=>err);
     /**ADJUNTAR ESTE URL AL REGISTRO QUE DESEAS */
-    const requeriment = await axios.post(`https://dineva-server.herokuapp.com/create/solOrder`,{...payload}).then(values=>values.data).catch(err=>err);
+    const requeriment = await axios.post(`http://localhost:4000/create/solOrder`,{...payload}).then(values=>values.data).catch(err=>err);
     addWorkFlow('create', 'solOrder', requeriment.id, payload, {})
     history.push('/app/order/request-list')
 }
@@ -38,18 +38,18 @@ export const updSolOrder = async (payload, history) => {
     const prePayload = Object.assign({} , payload)
     /*payload.cartulina = []
     for(let i=0; i<dataset.length; i++){
-      const URL = await axios.post(`https://dineva-server.herokuapp.com/upload`,{...dataset[i]}).then(values=>values.data).catch(err=>err);
+      const URL = await axios.post(`http://localhost:4000/upload`,{...dataset[i]}).then(values=>values.data).catch(err=>err);
       payload.cartulina.push(URL)
     }*/
-    const previous = await axios.get(`https://dineva-server.herokuapp.com/get/solOrder/${payload.code}`).then(values=>values.data).catch(err=>err);
-    const requeriment = await axios.put(`https://dineva-server.herokuapp.com/put/solOrder/${payload.code}`,{...payload}).then(values=>values.data).catch(err=>err);
+    const previous = await axios.get(`http://localhost:4000/get/solOrder/${payload.code}`).then(values=>values.data).catch(err=>err);
+    const requeriment = await axios.put(`http://localhost:4000/put/solOrder/${payload.code}`,{...payload}).then(values=>values.data).catch(err=>err);
     addWorkFlow('put','solOrder', payload.code, previous, { ...previous, ...payload})
 
-    history.push('/app/menu')
+    window.location.replace('/app/order/register')
 }
 
 export const getAllReq = () => async dispatch => {
-  let request = await axios.get(`https://dineva-server.herokuapp.com/get/solOrder`).then(values=>values.data).catch(err=>err);
+  let request = await axios.get(`http://localhost:4000/get/solOrder`).then(values=>values.data).catch(err=>err);
   if(!Array.isArray(request))request=[]
     return dispatch({
         type: GET_SOLORDER,
@@ -58,7 +58,7 @@ export const getAllReq = () => async dispatch => {
 }
 
 export const getSolOrderByID = (payload) => async dispatch => {
-    let solOrder = await axios.get(`https://dineva-server.herokuapp.com/get/solOrder/${payload.id}`).then(values=>values.data).catch(err=>err);
+    let solOrder = await axios.get(`http://localhost:4000/get/solOrder/${payload.id}`).then(values=>values.data).catch(err=>err);
     solOrder = convertJSON_ARRAY(solOrder)
     return dispatch({
         type: GET_SOLORDER_BY_ID,

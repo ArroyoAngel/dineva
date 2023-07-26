@@ -11,13 +11,13 @@ import { regRequest } from '../../../redux/request/actions'
 class Register extends Component {
     constructor(props){
         super(props)
-        let cart = localStorage.getItem('cart')
+        /*let cart = localStorage.getItem('cart')
         if(!cart || cart==='undefined' ||cart==='null')cart='[]'
-        cart = JSON.parse(cart)
+        cart = JSON.parse(cart)*/
 
         this.state = {
           orders: [],
-          cart,
+          cart: [],
 
           color: 0,
           alias: '',
@@ -112,7 +112,7 @@ class Register extends Component {
       let cart = this.state.cart
       cart[posCart] = body
 
-      localStorage.setItem('cart', JSON.stringify(cart))
+      //localStorage.setItem('cart', JSON.stringify(cart))
       this.setState({
         isOpen: false,
         cart
@@ -120,7 +120,7 @@ class Register extends Component {
     }
     dropCart(element){
       let cart = this.state.cart.filter(e=>element.bale!==e.bale)
-      localStorage.setItem('cart', JSON.stringify(cart))
+      //localStorage.setItem('cart', JSON.stringify(cart))
       this.setState({
         cart
       })
@@ -182,7 +182,7 @@ class Register extends Component {
                     data={filterStoreByCondition(this.state.orders, this.state.color, this.state.alias)} 
                     cols={[ 
                         { header: 'Alias', field: 'alias' },
-                        { header: 'Especificaciones', field: 'specification' },
+                        { header: 'Especificaciones', field: 'specification', DOM: (value)=><h6>{value.map((item, i)=>`${i>0?',':''} ${item}`)}</h6> },
                         { header: 'Piesas', field: 'pcs' },
                         { header: 'Metraje', field: 'mtr' },
                         { header: 'Color', field: 'color' },

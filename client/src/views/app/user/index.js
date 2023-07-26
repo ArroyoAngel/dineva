@@ -1,7 +1,8 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-const List = React.lazy(() => import('./List'));
-const Register = React.lazy(() => import('./Register'));
+
+import List from './List'
+import Register from './Register'
 
 const App = ({ match }) => {
   return (
